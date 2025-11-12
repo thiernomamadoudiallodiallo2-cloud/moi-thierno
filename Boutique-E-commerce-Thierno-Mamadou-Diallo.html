@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thierno Mamadou Diallo - Boutique en ligne</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#3b82f6',secondary:'#f59e0b'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        
+        .search-input:focus {
+            outline: none;
+        }
+        
+        .product-card:hover .add-to-cart {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .product-card .add-to-cart {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover .category-overlay {
+            opacity: 0.7;
+        }
+        
+        .category-card:hover .category-title {
+            transform: translateY(-5px);
+        }
+        
+        .category-title {
+            transition: transform 0.3s ease;
+        }
+        
+        .category-overlay {
+            transition: opacity 0.3s ease;
+        }
+        
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="font-['Pacifico'] text-2xl text-primary">Thierno Mamadou Diallo</a>
+                
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-gray-700 hover:text-primary font-medium transition-colors">Accueil</a>
+                    <div class="relative group">
+                        <button class="flex items-center text-gray-700 hover:text-primary font-medium transition-colors">
+                            Vêtements
+                            <div class="w-5 h-5 ml-1 flex items-center justify-center">
+                                <i class="ri-arrow-down-s-line"></i>
+                            </div>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Hommes</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Femmes</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Enfants</a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <button class="flex items-center text-gray-700 hover:text-primary font-medium transition-colors">
+                            Accessoires
+                            <div class="w-5 h-5 ml-1 flex items-center justify-center">
+                                <i class="ri-arrow-down-s-line"></i>
+                            </div>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Sacs</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Bijoux</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Montres</a>
+                        </div>
+                    </div>
+                    <a href="#" class="text-gray-700 hover:text-primary font-medium transition-colors">Nouveautés</a>
+                    <a href="#" class="text-gray-700 hover:text-primary font-medium transition-colors">Promotions</a>
+                </nav>
+                
+                <!-- Search Bar -->
+                <div class="hidden md:flex items-center flex-1 max-w-md mx-6">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="Rechercher un produit..." class="search-input w-full py-2 pl-10 pr-4 border border-gray-300 rounded-button text-sm">
+                        <div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-gray-400">
+                            <i class="ri-search-line"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <button class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors relative">
+                        <i class="ri-user-line text-xl"></i>
+                    </button>
+                    <button class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors relative">
+                        <i class="ri-heart-line text-xl"></i>
+                        <span class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">2</span>
+                    </button>
+                    <button class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors relative">
+                        <i class="ri-shopping-cart-line text-xl"></i>
+                        <span class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
+                    </button>
+                    <button class="md:hidden w-10 h-10 flex items-center justify-center text-gray-700">
+                        <i class="ri-menu-line text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Search -->
+            <div class="mt-3 md:hidden">
+                <div class="relative">
+                    <input type="text" placeholder="Rechercher un produit..." class="search-input w-full py-2 pl-10 pr-4 border border-gray-300 rounded-button text-sm">
+                    <div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-gray-400">
+                        <i class="ri-search-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gray-100 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent z-10"></div>
+        <div style="background-image: url('https://readdy.ai/api/search-image?query=High-end%20fashion%20store%20with%20elegant%20clothing%20display%2C%20featuring%20premium%20African-inspired%20fashion%20items%20on%20mannequins%2C%20modern%20minimalist%20interior%20design%20with%20soft%20lighting%2C%20luxury%20shopping%20environment%20with%20high-quality%20garments%20neatly%20arranged%2C%20professional%20fashion%20retail%20space&width=1600&height=800&seq=hero1&orientation=landscape'); background-size: cover; background-position: center;" class="absolute inset-0"></div>
+        
+        <div class="container mx-auto px-4 py-16 md:py-24 relative z-20">
+            <div class="max-w-xl">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Élégance et Style Authentique</h1>
+                <p class="text-lg text-gray-700 mb-8">Découvrez notre collection exclusive de vêtements et accessoires qui allient tradition et modernité pour un style unique.</p>
+                <div class="flex flex-wrap gap-4">
+                    <button class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-button font-medium transition-colors whitespace-nowrap">
+                        Découvrir la collection
+                    </button>
+                    <button class="bg-white hover:bg-gray-100 text-gray-800 px-6 py-3 rounded-button font-medium border border-gray-300 transition-colors whitespace-nowrap">
+                        Nouveautés
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Categories Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Nos Catégories</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Category 1 -->
+                <a href="#" class="category-card relative rounded-lg overflow-hidden shadow-md h-64 group">
+                    <div style="background-image: url('https://readdy.ai/api/search-image?query=Elegant%20men%5Cs%20fashion%2C%20professional%20male%20model%20wearing%20high-quality%20suit%20and%20accessories%2C%20clean%20studio%20background%2C%20luxury%20menswear%20collection%2C%20sophisticated%20styling%20for%20modern%20gentleman%2C%20premium%20tailoring%20with%20attention%20to%20detail&width=600&height=800&seq=cat1&orientation=portrait');" class="absolute inset-0 bg-cover bg-center"></div>
+                    <div class="category-overlay absolute inset-0 bg-black opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h3 class="category-title text-white text-2xl font-bold transition-transform">Hommes</h3>
+                    </div>
+                </a>
+                
+                <!-- Category 2 -->
+                <a href="#" class="category-card relative rounded-lg overflow-hidden shadow-md h-64 group">
+                    <div style="background-image: url('https://readdy.ai/api/search-image?query=Elegant%20women%5Cs%20fashion%2C%20professional%20female%20model%20wearing%20high-quality%20dress%20and%20accessories%2C%20clean%20studio%20background%2C%20luxury%20womenswear%20collection%2C%20sophisticated%20styling%20for%20modern%20woman%2C%20premium%20design%20with%20attention%20to%20detail&width=600&height=800&seq=cat2&orientation=portrait');" class="absolute inset-0 bg-cover bg-center"></div>
+                    <div class="category-overlay absolute inset-0 bg-black opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h3 class="category-title text-white text-2xl font-bold transition-transform">Femmes</h3>
+                    </div>
+                </a>
+                
+                <!-- Category 3 -->
+                <a href="#" class="category-card relative rounded-lg overflow-hidden shadow-md h-64 group">
+                    <div style="background-image: url('https://readdy.ai/api/search-image?query=Stylish%20accessories%20collection%2C%20luxury%20handbags%2C%20watches%2C%20jewelry%2C%20and%20sunglasses%20arranged%20elegantly%20on%20minimalist%20display%2C%20high-end%20fashion%20accessories%20with%20clean%20background%2C%20premium%20retail%20product%20photography%2C%20sophisticated%20styling&width=600&height=800&seq=cat3&orientation=portrait');" class="absolute inset-0 bg-cover bg-center"></div>
+                    <div class="category-overlay absolute inset-0 bg-black opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h3 class="category-title text-white text-2xl font-bold transition-transform">Accessoires</h3>
+                    </div>
+                </a>
+                
+                <!-- Category 4 -->
+                <a href="#" class="category-card relative rounded-lg overflow-hidden shadow-md h-64 group">
+                    <div style="background-image: url('https://readdy.ai/api/search-image?query=Stylish%20children%5Cs%20fashion%2C%20cute%20kids%20models%20wearing%20high-quality%20colorful%20clothing%2C%20clean%20studio%20background%2C%20playful%20yet%20elegant%20children%5Cs%20wear%20collection%2C%20comfortable%20and%20trendy%20outfits%20for%20boys%20and%20girls%2C%20premium%20quality%20materials&width=600&height=800&seq=cat4&orientation=portrait');" class="absolute inset-0 bg-cover bg-center"></div>
+                    <div class="category-overlay absolute inset-0 bg-black opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h3 class="category-title text-white text-2xl font-bold transition-transform">Enfants</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-12">
+                <h2 class="text-3xl font-bold">Produits en Vedette</h2>
+                <a href="#" class="text-primary hover:underline font-medium flex items-center">
+                    Voir tout
+                    <div class="w-5 h-5 ml-1 flex items-center justify-center">
+                        <i class="ri-arrow-right-line"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden group">
+                    <div class="relative">
+                        <div class="aspect-w-3 aspect-h-4 h-64">
+                            <img src="https://readdy.ai/api/search-image?query=Elegant%20mens%20blue%20suit%20jacket%2C%20professional%20product%20photography%20on%20clean%20white%20background%2C%20high-quality%20tailored%20blazer%2C%20luxury%20menswear%20item%2C%20detailed%20fabric%20texture%20visible%2C%20perfect%20lighting%20to%20show%20premium%20quality&width=600&height=800&seq=prod1&orientation=portrait" alt="Veste de costume" class="w-full h-full object-cover object-top">
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-primary text-white text-xs font-bold px-2 py-1 rounded">NOUVEAU</span>
+                        </div>
+                        <button class="add-to-cart absolute bottom-3 right-3 bg-white text-primary hover:bg-primary hover:text-white w-10 h-10 rounded-full shadow-md flex items-center justify-center transition-all !rounded-full">
+                            <i class="ri-shopping-cart-line"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-medium text-gray-900 mb-1">Veste Élégante</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-half-fill"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(24)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-gray-900">149,99 €</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden group">
+                    <div class="relative">
+                        <div class="aspect-w-3 aspect-h-4 h-64">
+                            <img src="https://readdy.ai/api/search-image?query=Elegant%20womens%20dress%20in%20rich%20burgundy%20color%2C%20professional%20product%20photography%20on%20clean%20white%20background%2C%20high-quality%20fabric%20with%20subtle%20details%2C%20luxury%20womenswear%20item%2C%20perfect%20lighting%20to%20show%20premium%20quality%20and%20texture&width=600&height=800&seq=prod2&orientation=portrait" alt="Robe élégante" class="w-full h-full object-cover object-top">
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-secondary text-white text-xs font-bold px-2 py-1 rounded">-20%</span>
+                        </div>
+                        <button class="add-to-cart absolute bottom-3 right-3 bg-white text-primary hover:bg-primary hover:text-white w-10 h-10 rounded-full shadow-md flex items-center justify-center transition-all !rounded-full">
+                            <i class="ri-shopping-cart-line"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-medium text-gray-900 mb-1">Robe de Soirée</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(42)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-lg font-bold text-gray-900">119,99 €</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">149,99 €</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden group">
+                    <div class="relative">
+                        <div class="aspect-w-3 aspect-h-4 h-64">
+                            <img src="https://readdy.ai/api/search-image?query=Luxury%20leather%20handbag%20in%20rich%20brown%20color%2C%20professional%20product%20photography%20on%20clean%20white%20background%2C%20high-quality%20craftsmanship%20with%20detailed%20stitching%2C%20premium%20accessory%20with%20gold%20hardware%2C%20perfect%20lighting%20to%20show%20texture%20and%20quality&width=600&height=800&seq=prod3&orientation=portrait" alt="Sac en cuir" class="w-full h-full object-cover object-top">
+                        </div>
+                        <button class="add-to-cart absolute bottom-3 right-3 bg-white text-primary hover:bg-primary hover:text-white w-10 h-10 rounded-full shadow-md flex items-center justify-center transition-all !rounded-full">
+                            <i class="ri-shopping-cart-line"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-medium text-gray-900 mb-1">Sac en Cuir Premium</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-line"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(18)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-gray-900">199,99 €</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden group">
+                    <div class="relative">
+                        <div class="aspect-w-3 aspect-h-4 h-64">
+                            <img src="https://readdy.ai/api/search-image?query=Elegant%20wristwatch%20with%20leather%20strap%2C%20professional%20product%20photography%20on%20clean%20white%20background%2C%20luxury%20timepiece%20with%20detailed%20dial%2C%20premium%20accessory%20with%20silver%20case%2C%20perfect%20lighting%20to%20show%20quality%20and%20craftsmanship&width=600&height=800&seq=prod4&orientation=portrait" alt="Montre élégante" class="w-full h-full object-cover object-top">
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-primary text-white text-xs font-bold px-2 py-1 rounded">POPULAIRE</span>
+                        </div>
+                        <button class="add-to-cart absolute bottom-3 right-3 bg-white text-primary hover:bg-primary hover:text-white w-10 h-10 rounded-full shadow-md flex items-center justify-center transition-all !rounded-full">
+                            <i class="ri-shopping-cart-line"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-medium text-gray-900 mb-1">Montre Classique</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-half-fill"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(36)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-gray-900">129,99 €</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Benefits Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Benefit 1 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="ri-truck-line text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Livraison Gratuite</h3>
+                    <p class="text-gray-600">Livraison gratuite pour toutes les commandes supérieures à 100€</p>
+                </div>
+                
+                <!-- Benefit 2 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="ri-shield-check-line text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Paiement Sécurisé</h3>
+                    <p class="text-gray-600">Transactions 100% sécurisées avec cryptage SSL</p>
+                </div>
+                
+                <!-- Benefit 3 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="ri-customer-service-2-line text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Service Client 24/7</h3>
+                    <p class="text-gray-600">Notre équipe est disponible pour vous aider à tout moment</p>
+                </div>
+                
+                <!-- Benefit 4 -->
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="ri-refresh-line text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Retours Faciles</h3>
+                    <p class="text-gray-600">30 jours pour retourner ou échanger vos articles</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-4">Restez Informé</h2>
+                <p class="text-gray-600 mb-8">Inscrivez-vous à notre newsletter pour recevoir les dernières tendances et offres exclusives.</p>
+                
+                <form class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                    <input type="email" placeholder="Votre adresse email" class="flex-1 px-4 py-3 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    <button type="submit" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-button font-medium transition-colors whitespace-nowrap">S'inscrire</button>
+                </form>
+                
+                <p class="text-sm text-gray-500 mt-4">En vous inscrivant, vous acceptez notre politique de confidentialité.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="font-['Pacifico'] text-2xl mb-6">Thierno Mamadou Diallo</h3>
+                    <p class="text-gray-400 mb-6">Votre destination pour une mode élégante et authentique qui allie tradition et modernité.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-facebook-fill"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-instagram-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-twitter-x-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-pinterest-line"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Liens Rapides</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">À propos de nous</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Nos collections</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Carrières</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contactez-nous</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Customer Service -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Service Client</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Expédition & Livraison</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Retours & Échanges</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Conditions Générales</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Politique de Confidentialité</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Contactez-nous</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-3 mt-1">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="text-gray-400">123 Avenue de la Mode, 75001 Paris, France</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-3 mt-1">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <span class="text-gray-400">+33 1 23 45 67 89</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-3 mt-1">
+                                <i class="ri-mail-line"></i>
+                            </div>
+                            <span class="text-gray-400">contact@thierno-diallo.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-3 mt-1">
+                                <i class="ri-time-line"></i>
+                            </div>
+                            <span class="text-gray-400">Lun-Sam: 10h-19h | Dim: Fermé</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Payment Methods & Copyright -->
+            <div class="pt-8 border-t border-gray-800">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Thierno Mamadou Diallo. Tous droits réservés.</p>
+                    
+                    <div class="flex items-center space-x-4">
+                        <span class="text-gray-400 text-sm">Moyens de paiement acceptés:</span>
+                        <div class="flex space-x-3">
+                            <div class="w-8 h-8 flex items-center justify-center text-gray-300">
+                                <i class="ri-visa-line text-xl"></i>
+                            </div>
+                            <div class="w-8 h-8 flex items-center justify-center text-gray-300">
+                                <i class="ri-mastercard-line text-xl"></i>
+                            </div>
+                            <div class="w-8 h-8 flex items-center justify-center text-gray-300">
+                                <i class="ri-paypal-line text-xl"></i>
+                            </div>
+                            <div class="w-8 h-8 flex items-center justify-center text-gray-300">
+                                <i class="ri-apple-fill text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-gray-900/50 z-50 hidden">
+        <div class="absolute right-0 top-0 h-full w-4/5 max-w-sm bg-white shadow-xl transform transition-transform">
+            <div class="p-5 flex justify-between items-center border-b">
+                <h3 class="font-['Pacifico'] text-xl text-primary">Thierno Mamadou Diallo</h3>
+                <button id="close-menu" class="w-8 h-8 flex items-center justify-center text-gray-500">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
+            </div>
+            <nav class="p-5">
+                <ul class="space-y-4">
+                    <li><a href="#" class="block py-2 text-gray-800 font-medium">Accueil</a></li>
+                    <li>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-gray-800 font-medium">Vêtements</span>
+                            <button class="w-8 h-8 flex items-center justify-center text-gray-500">
+                                <i class="ri-arrow-down-s-line"></i>
+                            </button>
+                        </div>
+                        <ul class="pl-4 mt-2 space-y-2 hidden">
+                            <li><a href="#" class="block py-1 text-gray-600">Hommes</a></li>
+                            <li><a href="#" class="block py-1 text-gray-600">Femmes</a></li>
+                            <li><a href="#" class="block py-1 text-gray-600">Enfants</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-gray-800 font-medium">Accessoires</span>
+                            <button class="w-8 h-8 flex items-center justify-center text-gray-500">
+                                <i class="ri-arrow-down-s-line"></i>
+                            </button>
+                        </div>
+                        <ul class="pl-4 mt-2 space-y-2 hidden">
+                            <li><a href="#" class="block py-1 text-gray-600">Sacs</a></li>
+                            <li><a href="#" class="block py-1 text-gray-600">Bijoux</a></li>
+                            <li><a href="#" class="block py-1 text-gray-600">Montres</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" class="block py-2 text-gray-800 font-medium">Nouveautés</a></li>
+                    <li><a href="#" class="block py-2 text-gray-800 font-medium">Promotions</a></li>
+                    <li><a href="#" class="block py-2 text-gray-800 font-medium">Mon Compte</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <script id="mobile-menu-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.ri-menu-line').parentElement;
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMenuButton = document.getElementById('close-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.querySelector('div').classList.add('translate-x-0');
+                mobileMenu.querySelector('div').classList.remove('translate-x-full');
+                document.body.classList.add('overflow-hidden');
+            });
+            
+            closeMenuButton.addEventListener('click', function() {
+                mobileMenu.querySelector('div').classList.remove('translate-x-0');
+                mobileMenu.querySelector('div').classList.add('translate-x-full');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
+                }, 300);
+            });
+            
+            // Mobile submenu toggles
+            const submenuToggles = document.querySelectorAll('nav ul li .flex button');
+            submenuToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const submenu = this.parentElement.nextElementSibling;
+                    submenu.classList.toggle('hidden');
+                    
+                    // Toggle icon
+                    if (submenu.classList.contains('hidden')) {
+                        this.querySelector('i').classList.remove('ri-arrow-up-s-line');
+                        this.querySelector('i').classList.add('ri-arrow-down-s-line');
+                    } else {
+                        this.querySelector('i').classList.remove('ri-arrow-down-s-line');
+                        this.querySelector('i').classList.add('ri-arrow-up-s-line');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
